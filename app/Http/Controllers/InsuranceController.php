@@ -47,6 +47,8 @@ class InsuranceController extends Controller
         'Data Added');
     }
 
+
+
     public function edit($id)
     {
         $insurances = Insurance::find($id);

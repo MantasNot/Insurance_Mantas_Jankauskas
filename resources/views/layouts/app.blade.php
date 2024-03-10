@@ -21,9 +21,10 @@
         <nav class="navbar sticky-top navbar-expand-lg bg-white flex-xl-fill">
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarNavDropdown" style="justify-content: space-evenly">
-                    <a type="button" class="btn btn-outline-primary" href="/create">prideti</a>
-                    <a type="button" class="btn btn-outline-primary" href="/client/">Primary</a>
-                    <a type="button" class="btn btn-outline-primary" href="/client/">Primary</a>
+                    <a type="button" class="btn btn-outline-primary" href="/create">Prideti Klienta</a>
+                    <a type="button" class="btn btn-outline-primary" href="/client/">Klientai</a>
+                    <a type="button" class="btn btn-outline-primary" href="/cars/create">Prideti Masina</a>
+                    <a type="button" class="btn btn-outline-primary" href="/car/">Masinos</a>
                     <a type="button" class="btn btn-outline-primary" href="/client/">Primary</a>
                     <a type="button" class="btn btn-outline-primary" href="/client/">Primary</a>
                 </div>

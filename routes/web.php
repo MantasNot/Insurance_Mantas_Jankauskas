@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\CarsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::resource('client', InsuranceController::class);
+Route::resource('cars', CarsController::class);
+
 Route::get('/create', function () {
     return view('client/create');
 });
+
 
