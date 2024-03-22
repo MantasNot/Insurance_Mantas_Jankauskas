@@ -1,7 +1,9 @@
 <?php
 
+
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\CarsController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +17,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('client/create');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('cars', CarsController::class);
+});
 Route::resource('client', InsuranceController::class);
-Route::resource('cars', CarsController::class);
+
+
 
 Route::get('/create', function () {
     return view('client/create');
 });
+Route::get('language/{lang}', [\App\Http\Controllers\LanguageController::class,'setLanguage'])->name('setLanguage');
 
-
+require __DIR__.'/auth.php';

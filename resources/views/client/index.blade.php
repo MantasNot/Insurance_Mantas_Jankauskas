@@ -30,7 +30,7 @@
                         <button type="submit" class="btn btn-danger" onclick="return confirm('ar tikrai norinte istrinti?')">Delete</button>
                     </form>
                 </td>
-        @endforeach
+                @endforeach
 
             </tr>
     </table>
