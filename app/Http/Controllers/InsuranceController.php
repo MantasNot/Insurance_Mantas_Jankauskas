@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InsuranceRequest;
 use http\Client;
 use Illuminate\Http\Request;
 use App\Models\Insurance;
@@ -26,15 +27,15 @@ class InsuranceController extends Controller
         return view('client.create');
     }
 
-    public function store(Request $request)
+    public function store(InsuranceRequest $request)
     {
-        $this->validate($request,[
-            'name' => 'required',
-            'surname' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required'
-        ]);
+//        $this->validate($request,[
+//            'name' => 'required',
+//            'surname' => 'required',
+//            'email' => 'required',
+//            'phone' => 'required',
+//            'address' => 'required'
+//        ]);
         $insurance = new Insurance([
             'name' => $request ->get('name'),
             'surname' => $request ->get('surname'),
