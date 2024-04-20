@@ -6,6 +6,7 @@ use App\Http\Requests\CarsRequest;
 use App\Models\Insurance;
 use App\Models\cars;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CarsController extends Controller
 {
@@ -65,11 +66,46 @@ class CarsController extends Controller
     /**
      * Update the specified resource in storage.
      */
+//    public function update(Request $request, cars $car)
+//    {
+//        $car->update($request->all());
+//        $car->save();
+//        return redirect()->route('cars.index');
+//    }
+
     public function update(Request $request, cars $car)
     {
-        $car->update($request->all());
+        // Validate the form data
+        $request->validate([
+            'reg_number' => 'required|string',
+            'brand' => 'required|string',
+            'model' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
+        ]);
+
+        // Update car details
+        $car->reg_number = $request->input('reg_number');
+        $car->brand = $request->input('brand');
+        $car->model = $request->input('model');
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete previous image if exists
+            if ($car->image) {
+                Storage::delete('public/' . $car->image);
+            }
+
+            // Store new image
+            $imagePath = $request->file('image')->store('public/cars');
+            $car->image = str_replace('public/', '', $imagePath); // Store image path in database
+        }
+
+        // Save the updated car record
         $car->save();
-        return redirect()->route('cars.index');
+
+        // Redirect back to the index page or another page
+        return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
+        dd($request->all());
     }
 
     /**

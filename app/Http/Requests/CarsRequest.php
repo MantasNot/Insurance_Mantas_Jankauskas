@@ -35,6 +35,8 @@ class CarsRequest extends FormRequest
             'reg_number.required' => 'Please enter registration number.',
             'brand.required' => 'Please enter brand.',
             'model.required' => 'Please enter model.',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ];
     }
 }

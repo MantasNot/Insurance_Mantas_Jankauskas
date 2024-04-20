@@ -24,6 +24,10 @@
                                 <label class="form-label">Modelis:</label>
                                 <input type="text" class="form-control" name="model" value="{{$cars->model}}">
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nuotrauka:</label>
+                                <input class="form-control" type="file" name="image">
+                            </div>
                             <button class="btn btn-success">Atnaujinti</button>
                         </form>
                     </div>

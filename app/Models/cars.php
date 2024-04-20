@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class cars extends Model
 {
-    protected $fillable = ['reg_number', 'brand', 'model', 'owner_id'];
+    protected $fillable = ['reg_number', 'brand', 'model', 'owner_id', 'image'];
     public function Insurance(){
         return $this->belongsTo(Insurance::class);
     }
