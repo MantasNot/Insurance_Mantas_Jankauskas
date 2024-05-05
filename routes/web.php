@@ -30,10 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::middleware(['auth'])->group(function () {
-    Route::resource('cars', CarsController::class);
-});
+//Route::delete('/cars/{cars}', 'CarsController@destroy')->name('cars.destroy');
+//Route::middleware(['auth'])->group(function () {
+//
+//});
+Route::resource('cars', CarsController::class);
 Route::resource('client', InsuranceController::class);
 
 

@@ -13,14 +13,28 @@ class CarsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->authorizeResource(cars::class, 'cars');
+
+    }
 
     public function index()
     {
-        $cars = cars::all()->toArray();
-        $Insurance = Insurance::all()->toArray();
+        $user = auth()->user();
+
+        if ($user->type === null) {
+            $cars = cars::where('user_id', $user->id)->get();
+        } else {
+            $cars = cars::all()->filter(function ($car) {
+                return $this->authorize('view', $car);
+            });
+        }
+        $Insurance = Insurance::all();
 
         return view('cars.index', compact('cars', 'Insurance'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,46 +80,31 @@ class CarsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-//    public function update(Request $request, cars $car)
-//    {
-//        $car->update($request->all());
-//        $car->save();
-//        return redirect()->route('cars.index');
-//    }
 
     public function update(Request $request, cars $car)
     {
-        // Validate the form data
-        $request->validate([
-            'reg_number' => 'required|string',
-            'brand' => 'required|string',
-            'model' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image file
-        ]);
+            $request->validate([
+                'reg_number' => 'required|string',
+                'brand' => 'required|string',
+                'model' => 'required|string',
+                'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        // Update car details
-        $car->reg_number = $request->input('reg_number');
-        $car->brand = $request->input('brand');
-        $car->model = $request->input('model');
+            $car->reg_number = $request->input('reg_number');
+            $car->brand = $request->input('brand');
+            $car->model = $request->input('model');
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete previous image if exists
-            if ($car->image) {
-                Storage::delete('public/' . $car->image);
+            if ($request->hasFile('image')) {
+                if ($car->image) {
+                    Storage::delete('public/' . $car->image);
+                }
+
+                $imagePath = $request->file('image')->store('public/cars');
+                $car->image = str_replace('public/', '', $imagePath);
             }
 
-            // Store new image
-            $imagePath = $request->file('image')->store('public/cars');
-            $car->image = str_replace('public/', '', $imagePath); // Store image path in database
-        }
-
-        // Save the updated car record
-        $car->save();
-
-        // Redirect back to the index page or another page
-        return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
-        dd($request->all());
+            $car->save();
+            return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
     }
 
     /**

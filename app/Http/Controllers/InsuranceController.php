@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InsuranceRequest;
+use App\Models\cars;
 use http\Client;
 use Illuminate\Http\Request;
 use App\Models\Insurance;
@@ -13,6 +14,12 @@ class InsuranceController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->authorizeResource(Insurance::class, 'insurances');
+
+    }
+
     public function index()
     {
         $insurances = Insurance::all()->toArray();
